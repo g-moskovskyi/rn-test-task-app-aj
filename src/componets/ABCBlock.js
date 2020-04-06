@@ -6,15 +6,20 @@ import { ItemsBlock } from '../componets/ItemsBlock';
 
 const ABCBlock = (props) => {
   const usersABC = useSelector((state) => state.usersABC);
-  const filters = useSelector((state) => state.filters);
+  const filteredUsers = useSelector((state) => state.filteredUsers);
 
-  let usersList;
-  if (!filters) {
-    usersList = useSelector((state) => state.filteredUsers);
-  } else {
-    usersList = useSelector((state) => state.users);
+  const usersList =
+    filteredUsers.length > 0
+      ? useSelector((state) => state.filteredUsers)
+      : useSelector((state) => state.users);
+
+  if (usersList === 'empty') {
+    return (
+      <View>
+        <Text>No results ...</Text>
+      </View>
+    );
   }
-
   const renderBlock = (itemData) => {
     return (
       <View style={styles.block}>

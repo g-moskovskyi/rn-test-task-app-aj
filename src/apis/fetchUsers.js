@@ -3,7 +3,7 @@ import axios from 'axios';
 import { sortUsers } from '../store/middlewares/users';
 import { usersABC } from '../store/middlewares/users';
 
-const access_token = 'pd0IcUQJMYHMK5VoyR3-bcV0cyaCwuuDq39P';
+const access_token = 'klhdmupEixV92pIAt0Gz3g1DmU-dAN5pMvST';
 
 const fetchUsers = async (dispatch, SET_USERS, SET_USERS_ABC) => {
   try {

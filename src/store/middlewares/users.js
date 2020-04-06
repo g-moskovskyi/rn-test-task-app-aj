@@ -1,7 +1,9 @@
 const sortUsers = (users) => {
   users.sort((prev, next) => {
-    if (prev.first_name < next.first_name) return -1;
-    if (prev.first_name < next.first_name) return 1;
+    const prevWord = prev.first_name.toUpperCase();
+    const nextWord = next.first_name.toUpperCase();
+    if (prevWord < nextWord) return -1;
+    if (prevWord > nextWord) return 1;
   });
   return users;
 };

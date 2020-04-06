@@ -4,6 +4,7 @@ import { useSelector, useStore } from 'react-redux';
 
 import { setUsers } from '../store/actions/users';
 import { ABCBlock } from '../componets/ABCBlock';
+import { SearchBar } from '../componets/SearchBar';
 
 const ListScreen = (props) => {
   const { dispatch } = useStore();
@@ -29,6 +30,7 @@ const ListScreen = (props) => {
           dispatch(setUsers());
         }}
       />
+      <SearchBar />
       <ABCBlock navigation={props.navigation} />
     </View>
   );

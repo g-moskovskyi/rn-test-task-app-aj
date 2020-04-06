@@ -2,6 +2,8 @@ import {
   SET_USERS,
   SET_USERS_ABC,
   SENT_INVITATION,
+  SET_SEARC_FILTER,
+  SET_FILTRED_USERS,
   SET_FILTERS,
 } from '../actions/users';
 
@@ -9,7 +11,8 @@ const initialState = {
   users: [],
   usersABC: [],
   filteredUsers: [],
-  filters: [],
+  searchFilter: '',
+  filters: { age: { from: [], to: [] }, sex: 'both' },
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -29,8 +32,17 @@ const usersReducer = (state = initialState, action) => {
         ...state,
         users: action.setUsers,
       };
-    // case SET_FILTERS:
-    //   const appliedFilters = action.filters;
+    case SET_SEARC_FILTER:
+      return {
+        ...state,
+        searchFilter: action.setSearchFilter,
+      };
+    case SET_FILTRED_USERS:
+      return {
+        ...state,
+        filteredUsers: action.setFilteredUsers,
+      };
+    // const appliedFilters = action.filters;
     //   const updatedFilteredMeals = state.meals.filter(meal => {
     //     if (appliedFilters.glutenFree && !meal.isGlutenFree) {
     //       return false;

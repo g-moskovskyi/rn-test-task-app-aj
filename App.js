@@ -15,7 +15,6 @@ import { usersReducer } from './src/store/reducers/users';
 
 const store = createStore(
   usersReducer,
-  // applyMiddleware(thunk)
   composeWithDevTools(applyMiddleware(thunk))
 );
 
