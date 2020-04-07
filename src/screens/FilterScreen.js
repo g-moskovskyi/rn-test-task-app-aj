@@ -1,9 +1,10 @@
-import React, { useState, setState } from 'react';
-import { View, Text, Button, Picker, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Button, Picker, Text, StyleSheet } from 'react-native';
 import { useStore, useSelector } from 'react-redux';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
 import { age } from '../store/middlewares/users';
+import { setFilters, setFilteredUsers } from '../store/actions/users';
 
 const FilterScreen = (props) => {
   const users = useSelector((state) => state.users);
@@ -11,20 +12,18 @@ const FilterScreen = (props) => {
   const usersAgeMin = Math.min(...usersAges);
   const usersAgeMax = Math.max(...usersAges);
 
-  const [sex, setSex] = useState('both');
+  const [gender, setGender] = useState('both');
   const [ageMin, setAgeMin] = useState(usersAgeMin);
   const [ageMax, setAgeMax] = useState(usersAgeMax);
 
-  console.log('ageMin', ageMin, 'ageMax', ageMax);
-
-  const sortedUsersAges = usersAges.sort((prev, next) => {
-    if (prev < next) return -1;
-    if (prev > next) return 1;
-  });
+  const { dispatch } = useStore();
 
   return (
     <View style={styles.screen}>
       <View style={styles.age}>
+        <View style={styles.ageText}>
+          <Text>AGE:</Text>
+        </View>
         <MultiSlider
           trackStyle={{ backgroundColor: '#bdc3c7' }}
           selectedStyle={{ backgroundColor: '#5e5e5e' }}
@@ -35,20 +34,22 @@ const FilterScreen = (props) => {
           allowOverlap={false}
           enableLabel={true}
           enabledTwo={true}
-          style={{ padding: 10 }}
+          style={{ padding: 30 }}
           onValuesChange={(values) => {
             setAgeMin(values[0]);
             setAgeMax(values[1]);
           }}
         />
       </View>
-      <View style={styles.sex}>
+      <View style={styles.gender}>
+        <View style={styles.genderText}>
+          <Text>GENDER:</Text>
+        </View>
         <Picker
-          selectedValue={sex}
+          selectedValue={gender}
           style={{ height: 50, width: 150 }}
           onValueChange={(itemValue, itemIndex) => {
-            setSex(itemValue);
-            console.log(itemValue);
+            setGender(itemValue);
           }}
         >
           <Picker.Item label='Both' value='both' />
@@ -58,20 +59,37 @@ const FilterScreen = (props) => {
       </View>
       <View style={styles.buttonsBlock}>
         <View style={styles.button}>
-          <Button title='CANCEL' onPress={() => {}} />
+          <Button
+            title='CANCEL'
+            onPress={() => {
+              props.navigation.navigate('List of members');
+            }}
+          />
         </View>
         <View style={styles.button}>
           <Button
             title='CLEAR'
             onPress={() => {
-              setSex('both');
+              setGender('both');
               setAgeMin(usersAgeMin);
               setAgeMax(usersAgeMax);
             }}
           />
         </View>
         <View style={styles.button}>
-          <Button title='OK' onPress={() => {}} />
+          <Button
+            title='OK'
+            onPress={() => {
+              dispatch(
+                setFilters({
+                  gender: gender,
+                  age: { from: ageMin, to: ageMax },
+                })
+              );
+              dispatch(setFilteredUsers());
+              props.navigation.navigate('List of members');
+            }}
+          />
         </View>
       </View>
     </View>
@@ -90,13 +108,23 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   age: {
+    flexDirection: 'row',
     width: '100%',
     height: 120,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     marginHorizontal: 10,
   },
-  sex: {},
+  ageText: { width: 40 },
+  gender: {
+    flexDirection: 'row',
+    width: '100%',
+    height: 120,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginHorizontal: 10,
+  },
+  genderText: { width: 60 },
   buttonsBlock: {
     width: '100%',
     flexDirection: 'row',

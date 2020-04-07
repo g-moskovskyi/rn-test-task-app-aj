@@ -3,12 +3,12 @@ import { StyleSheet, TextInput, View, Button } from 'react-native';
 import { useStore } from 'react-redux';
 
 import { setSearchFilter } from '../store/actions/users';
-import { setFilteredUsers, cleanFilteredUsers } from '../store/actions/users';
+import { setSearchedUsers, cleanFilteredUsers } from '../store/actions/users';
 
 const textHeandler = (text, dispatch) => {
   if (text.length > 2) {
     dispatch(setSearchFilter(text));
-    dispatch(setFilteredUsers(text));
+    dispatch(setSearchedUsers(text));
   } else {
     dispatch(setSearchFilter(''));
     dispatch(cleanFilteredUsers());

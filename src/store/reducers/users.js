@@ -12,7 +12,7 @@ const initialState = {
   usersABC: [],
   filteredUsers: [],
   searchFilter: '',
-  filters: { age: { from: [], to: [] }, sex: 'both' },
+  filters: { age: { from: [], to: [] }, gender: 'both' },
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -42,23 +42,11 @@ const usersReducer = (state = initialState, action) => {
         ...state,
         filteredUsers: action.setFilteredUsers,
       };
-    // const appliedFilters = action.filters;
-    //   const updatedFilteredMeals = state.meals.filter(meal => {
-    //     if (appliedFilters.glutenFree && !meal.isGlutenFree) {
-    //       return false;
-    //     }
-    //     if (appliedFilters.lactoseFree && !meal.isLactoseFree) {
-    //       return false;
-    //     }
-    //     if (appliedFilters.vegetarian && !meal.isVegetarian) {
-    //       return false;
-    //     }
-    //     if (appliedFilters.vegan && !meal.isVegan) {
-    //       return false;
-    //     }
-    //     return true;
-    //   });
-    //   return { ...state, filteredMeals: updatedFilteredMeals };
+    case SET_FILTERS:
+      return {
+        ...state,
+        filters: action.setFilters,
+      };
     default:
       return state;
   }

@@ -37,7 +37,7 @@ const ListScreen = (props) => {
         </View>
         <View style={styles.button}>
           <Button
-            title='Go to the Filter'
+            title='GO TO THE FILTERS'
             onPress={() => props.navigation.navigate('Filter')}
           />
         </View>
