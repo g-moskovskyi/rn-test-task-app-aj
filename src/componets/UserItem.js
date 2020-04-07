@@ -1,15 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native';
-import moment from 'moment';
+import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 
+import { age } from '../store/middlewares/users';
 const UserItem = (props) => {
   const itemData = props.itemData;
-
-  const age = (dob) => {
-    const birthday = moment(dob);
-    const today = moment();
-    return today.diff(birthday, 'years');
-  };
 
   const activeMark =
     itemData.item.status == 'active' ? styles.active : styles.inactive;
@@ -39,7 +33,7 @@ const styles = StyleSheet.create({
 
     borderColor: 'red',
     borderWidth: 2,
-    borderRadius: 25,
+    borderRadius: 15,
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginHorizontal: 15,
@@ -47,7 +41,7 @@ const styles = StyleSheet.create({
     padding: 20,
     overflow: 'hidden',
   },
-  text: { fontFamily: 'open-sans-bold', fontSize: 18 },
+  text: { fontFamily: 'open-sans-bold', fontSize: 18, textAlign: 'center' },
   active: { color: 'black' },
   inactive: { color: 'gray' },
 });

@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const sortUsers = (users) => {
   users.sort((prev, next) => {
     const prevWord = prev.first_name.toUpperCase();
@@ -8,6 +10,12 @@ const sortUsers = (users) => {
   return users;
 };
 
+const age = (dob) => {
+  const birthday = moment(dob);
+  const today = moment();
+  return today.diff(birthday, 'years');
+};
+
 const usersABC = (users) => {
   let arr = users.map((item) => item.first_name[0].toUpperCase());
   let alphabet = arr.reduce((unique, item) =>
@@ -16,4 +24,4 @@ const usersABC = (users) => {
   return alphabet;
 };
 
-export { sortUsers, usersABC };
+export { sortUsers, usersABC, age };
