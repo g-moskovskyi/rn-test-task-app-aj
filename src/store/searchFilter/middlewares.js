@@ -8,7 +8,7 @@ const setSearchFilterMiddleware = ({ dispatch }) => (next) => (action) => {
     if (filter.length > 2) {
       dispatch(setSearchFilter(filter));
     }
-    if (filter.length == 2) {
+    if (filter.length <= 2) {
       dispatch(cleanSearchFilter());
       dispatch(cleanFilteredUsersCheck());
     }
