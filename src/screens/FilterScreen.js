@@ -3,20 +3,36 @@ import { View, Button, Picker, Text, StyleSheet } from 'react-native';
 import { useStore, useSelector } from 'react-redux';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
-import { age } from '../store/middlewares/users';
-import { setFilters, setFilteredUsers } from '../store/actions/users';
+import { age } from '../converters/';
+import { setFilters, cleanFilters } from '../store/filters';
+import { cleanFilteredUsersCheck } from '../store/filteredUsers';
 
 const FilterScreen = (props) => {
-  const users = useSelector((state) => state.users);
+  const { dispatch } = useStore();
+  const users = useSelector((state) => state.users.items);
+  const filters = useSelector((state) => state.filters.params);
   const usersAges = users.map((item) => age(item.dob));
   const usersAgeMin = Math.min(...usersAges);
   const usersAgeMax = Math.max(...usersAges);
 
-  const [gender, setGender] = useState('both');
-  const [ageMin, setAgeMin] = useState(usersAgeMin);
-  const [ageMax, setAgeMax] = useState(usersAgeMax);
+  const [gender, setGender] = useState(
+    filters == 'empty' ? 'both' : filters.gender
+  );
+  const [ageMin, setAgeMin] = useState(
+    filters == 'empty' ? usersAgeMin : filters.age.from
+  );
+  const [ageMax, setAgeMax] = useState(
+    filters == 'empty' ? usersAgeMax : filters.age.to
+  );
 
-  const { dispatch } = useStore();
+  const cleanFiltersForm = () => {
+    setGender('both');
+    setAgeMin(usersAgeMin);
+    setAgeMax(usersAgeMax);
+  };
+
+  const withoutChangeExit =
+    gender === 'both' && ageMin === usersAgeMin && ageMax === usersAgeMax;
 
   return (
     <View style={styles.screen}>
@@ -27,10 +43,11 @@ const FilterScreen = (props) => {
         <MultiSlider
           trackStyle={{ backgroundColor: '#bdc3c7' }}
           selectedStyle={{ backgroundColor: '#5e5e5e' }}
-          values={[usersAgeMin, usersAgeMax]}
+          values={[ageMin, ageMax]}
           min={usersAgeMin}
           max={usersAgeMax}
           valueSuffix={'year'}
+          valuePrefix={'age:'}
           allowOverlap={false}
           enableLabel={true}
           enabledTwo={true}
@@ -68,11 +85,11 @@ const FilterScreen = (props) => {
         </View>
         <View style={styles.button}>
           <Button
-            title='CLEAR'
+            title='RESET'
             onPress={() => {
-              setGender('both');
-              setAgeMin(usersAgeMin);
-              setAgeMax(usersAgeMax);
+              dispatch(cleanFilters());
+              dispatch(cleanFilteredUsersCheck());
+              cleanFiltersForm();
             }}
           />
         </View>
@@ -80,13 +97,15 @@ const FilterScreen = (props) => {
           <Button
             title='OK'
             onPress={() => {
-              dispatch(
-                setFilters({
-                  gender: gender,
-                  age: { from: ageMin, to: ageMax },
-                })
-              );
-              dispatch(setFilteredUsers());
+              if (!withoutChangeExit) {
+                dispatch(
+                  setFilters({
+                    gender: gender,
+                    age: { from: ageMin, to: ageMax },
+                  })
+                );
+              }
+
               props.navigation.navigate('List of members');
             }}
           />

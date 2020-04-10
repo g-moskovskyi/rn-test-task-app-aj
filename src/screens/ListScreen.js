@@ -2,22 +2,66 @@ import React from 'react';
 import { View, Text, Button, StyleSheet, Platform } from 'react-native';
 import { useSelector, useStore } from 'react-redux';
 
-import {
-  setUsers,
-  setSearchFilter,
-  cleanFilteredUsers,
-} from '../store/actions/users';
+import { fetchUsers } from '../store/users/actions';
+
 import { ABCBlock } from '../componets/ABCBlock';
 import { SearchBar } from '../componets/SearchBar';
+import { cleanFilteredUsers } from '../store/filteredUsers';
+import { cleanErrors } from '../store/errors';
+
+const RefreshButton = () => {
+  const { dispatch } = useStore();
+  return (
+    <Button
+      title='REFRESH USERLIST'
+      onPress={() => {
+        dispatch(fetchUsers());
+        dispatch(cleanErrors());
+      }}
+    />
+  );
+};
 
 const ListScreen = (props) => {
   const { dispatch } = useStore();
-  usersList = useSelector((state) => state.users);
+  const usersList = useSelector((state) => state.users.items);
+  const errors = useSelector((state) => state.errors.items);
 
-  if (usersList.name) {
+  if (errors != 'empty') {
     return (
       <View>
-        <Text>Check 'access-token' in 'src/apis/fetchUsers.js'</Text>
+        <RefreshButton />
+        <Text>
+          {errors.name}
+          {': '}
+          {errors.message}
+        </Text>
+      </View>
+    );
+  }
+
+  if (usersList == 'loading') {
+    return (
+      <View>
+        <RefreshButton />
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
+  if (usersList == 'empty') {
+    return (
+      <View>
+        <RefreshButton />
+        <Text>Check 'access-token' in 'src/apis/constants.js'</Text>
+      </View>
+    );
+  }
+  if (usersList == 'no_results') {
+    return (
+      <View>
+        <RefreshButton />
+        <Text>You send invitations to all users</Text>
       </View>
     );
   }
@@ -26,21 +70,15 @@ const ListScreen = (props) => {
     <View style={styles.screen}>
       <View style={styles.buttonsBlock}>
         <View style={styles.button}>
-          <Button
-            title='REFRESH USERLIST'
-            onPress={() => {
-              dispatch(setUsers());
-              dispatch(setSearchFilter(''));
-              dispatch(cleanFilteredUsers());
-            }}
-          />
+          <RefreshButton />
         </View>
         <View style={styles.button}>
           <Button
-            title='GO TO THE FILTERS'
+            title='FILTERS'
             onPress={() => props.navigation.navigate('Filter')}
           />
         </View>
+        <View style={styles.button}></View>
       </View>
       <SearchBar />
       <ABCBlock navigation={props.navigation} />

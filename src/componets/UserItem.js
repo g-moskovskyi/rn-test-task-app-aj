@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import { age } from '../store/middlewares/users';
+import { age } from '../converters';
 const UserItem = (props) => {
   const itemData = props.itemData;
 

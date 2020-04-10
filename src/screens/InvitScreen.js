@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, StyleSheet, Text, View, Button } from 'react-native';
 import { useStore } from 'react-redux';
 
-import { sentInvitation } from '../store/actions/users';
+import { sendInvitation } from '../store/users/actions';
 
 const InvitScreen = (props) => {
   const id = props.route.params.id;
@@ -22,7 +22,7 @@ const InvitScreen = (props) => {
         <Button
           title='YES'
           onPress={() => {
-            dispatch(sentInvitation(id));
+            dispatch(sendInvitation(id));
             props.navigation.navigate('Inform');
           }}
         />

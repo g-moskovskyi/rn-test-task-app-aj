@@ -2,18 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, TextInput, View, Button } from 'react-native';
 import { useStore } from 'react-redux';
 
-import { setSearchFilter } from '../store/actions/users';
-import { setSearchedUsers, cleanFilteredUsers } from '../store/actions/users';
-
-const textHeandler = (text, dispatch) => {
-  if (text.length > 2) {
-    dispatch(setSearchFilter(text));
-    dispatch(setSearchedUsers(text));
-  } else {
-    dispatch(setSearchFilter(''));
-    dispatch(cleanFilteredUsers());
-  }
-};
+import { fetchSearchFilter } from '../store/searchFilter';
 
 const SearchBar = (props) => {
   const [text, setText] = useState('');
@@ -25,13 +14,13 @@ const SearchBar = (props) => {
         placeholder='Search...'
         onChangeText={(text) => {
           setText(text);
-          textHeandler(text, dispatch);
+          dispatch(fetchSearchFilter(text));
         }}
         defaultValue={text}
         style={styles.textInput}
       />
       <View style={styles.button}>
-        {/* <Button title='CLEAR' onPress={setText('')} /> */}
+        {/* <Button title='CLEAN' onPress={setText('')} /> */}
       </View>
     </View>
   );

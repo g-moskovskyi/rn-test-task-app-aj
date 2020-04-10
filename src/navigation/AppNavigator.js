@@ -7,7 +7,7 @@ import { ListScreen } from '../screens/ListScreen';
 import { FilterScreen } from '../screens/FilterScreen';
 import { InvitScreen } from '../screens/InvitScreen';
 import { SendedScreen } from '../screens/SendedScreen';
-import { setUsers } from '../store/actions/users';
+import { fetchUsers } from '../store/users/actions';
 
 const Stack = createStackNavigator();
 
@@ -16,7 +16,7 @@ const AppNavigator = (props) => {
   const store = useStore();
 
   if (!usersSeted) {
-    store.dispatch(setUsers());
+    store.dispatch(fetchUsers());
     setUsersSeted(true);
   }
 

@@ -1,22 +1,15 @@
 import 'react-native-gesture-handler';
 
 import React, { useState } from 'react';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
 
+import createStore from './src/store';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 
 import { AppNavigator } from './src/navigation/AppNavigator';
 
-import { usersReducer } from './src/store/reducers/users';
-
-const store = createStore(
-  usersReducer,
-  composeWithDevTools(applyMiddleware(thunk))
-);
+const store = createStore();
 
 const fetchFonts = () => {
   return Font.loadAsync({

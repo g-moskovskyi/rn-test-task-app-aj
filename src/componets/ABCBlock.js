@@ -5,15 +5,13 @@ import { useSelector } from 'react-redux';
 import { ItemsBlock } from '../componets/ItemsBlock';
 
 const ABCBlock = (props) => {
-  const usersABC = useSelector((state) => state.usersABC);
-  const filteredUsers = useSelector((state) => state.filteredUsers);
+  const usersABC = useSelector((state) => state.usersABC.items);
+  const filteredUsers = useSelector((state) => state.filteredUsers.items);
+  const users = useSelector((state) => state.users.items);
 
-  const usersList =
-    filteredUsers.length > 0
-      ? useSelector((state) => state.filteredUsers)
-      : useSelector((state) => state.users);
+  const usersList = filteredUsers == 'empty' ? users : filteredUsers;
 
-  if (usersList === 'empty') {
+  if (usersList == 'no_results') {
     return (
       <View>
         <Text>No results ...</Text>
@@ -21,6 +19,10 @@ const ABCBlock = (props) => {
     );
   }
   const renderBlock = (itemData) => {
+    const renderList = usersList.filter(
+      (item) => item.first_name[0].toUpperCase() === itemData.item
+    );
+
     return (
       <View style={styles.block}>
         <Text>
@@ -28,7 +30,7 @@ const ABCBlock = (props) => {
           {itemData.item}
           {'>'}
         </Text>
-        <ItemsBlock letter={itemData.item} navigation={props.navigation} />
+        <ItemsBlock renderList={renderList} navigation={props.navigation} />
       </View>
     );
   };
