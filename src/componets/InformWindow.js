@@ -10,7 +10,7 @@ const InformWindow = (props) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <View style={styles.textBlock}>
-              <Text style={styles.text}>Invitation is sended!</Text>
+              <Text style={styles.text}>Invitation Sent!</Text>
             </View>
             <View style={styles.buttonsBlock}>
               <ChoiceButtton

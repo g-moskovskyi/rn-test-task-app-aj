@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useStore } from 'react-redux';
 
 import { fetchSearchFilter } from '../store/searchFilter';
@@ -16,6 +16,9 @@ const SearchBar = (props) => {
 
   return (
     <View style={styles.searchBar}>
+      <View style={styles.text}>
+        <Text>Name: </Text>
+      </View>
       <TextInput
         placeholder='Search...'
         onChangeText={(text) => onChangeText(text)}
@@ -41,7 +44,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     overflow: 'hidden',
   },
-  textInput: { width: '90%' },
+  text: { width: '15%' },
+  textInput: { width: '75%' },
   button: { flex: 1, width: 20 },
 });
 

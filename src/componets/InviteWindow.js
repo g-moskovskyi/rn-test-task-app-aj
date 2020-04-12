@@ -28,7 +28,9 @@ const InviteWindow = (props) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <View>
-              <Text style={styles.text}>Send invitation?</Text>
+              <Text style={styles.text}>
+                Do you really want to invite a user with id = {id}?
+              </Text>
             </View>
             <View style={styles.buttonsBlock}>
               <ChoiceButtton
@@ -84,6 +86,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'open-sans',
     fontSize: 20,
+    textAlign: 'center',
   },
   button: { flex: 1, width: 60 },
 });
