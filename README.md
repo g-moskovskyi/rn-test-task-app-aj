@@ -36,7 +36,7 @@ Filters are a set of fields that perform interactive filtering. Filtering occurs
 - Buttons "Cancel" and "OK"- closes and applies the filter, respectively.
 - Button "Reset" - resets all field values.
 
-How to use:
+## How to use:
 ```
 git clone https://github.com/g-moskovskyi/rn-test-task-app-aj.git
 npm install
