@@ -8,6 +8,7 @@ import { usersABC, usersABCMiddlewares } from './usersABC';
 import { filteredUsers, filteredUsersMiddlewares } from './filteredUsers';
 import { searchFilter, searchFiltersMiddlewares } from './searchFilter';
 import { filters } from './filters';
+import { inviteWindow } from './inviteWindow';
 
 const rootReducer = combineReducers({
   errors,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   filteredUsers,
   searchFilter,
   filters,
+  inviteWindow,
 });
 
 export default () => {

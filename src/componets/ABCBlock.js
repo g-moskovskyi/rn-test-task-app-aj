@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { ItemsBlock } from '../componets/ItemsBlock';
+import { InviteWindow } from '../componets/InviteWindow';
 
 const ABCBlock = (props) => {
   const usersABC = useSelector((state) => state.usersABC.items);
@@ -24,7 +25,7 @@ const ABCBlock = (props) => {
     );
 
     return (
-      <View style={styles.block}>
+      <View style={styles.itemBlock}>
         <Text>
           {'<'}
           {itemData.item}
@@ -36,7 +37,11 @@ const ABCBlock = (props) => {
   };
 
   return (
-    <View>
+    <View style={styles.abcBlock}>
+      <View style={styles.inviteWindow}>
+        <InviteWindow />
+      </View>
+
       <FlatList
         data={usersABC}
         keyExtractor={(item, index) => item}
@@ -46,5 +51,11 @@ const ABCBlock = (props) => {
   );
 };
 
-const styles = StyleSheet.create({ block: { flex: 1, paddingHorizontal: 10 } });
+const styles = StyleSheet.create({
+  abcBlock: {
+    justifyContent: 'flex-start',
+  },
+  itemBlock: { flex: 1, paddingHorizontal: 10 },
+  inviteWindow: { height: 0 },
+});
 export { ABCBlock };

@@ -1,18 +1,20 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useStore } from 'react-redux';
 
 import { age } from '../converters';
+import { openInviteWindow } from '../store/inviteWindow/actions';
+
 const UserItem = (props) => {
   const itemData = props.itemData;
+  const { dispatch } = useStore();
 
   const activeMark =
     itemData.item.status == 'active' ? styles.active : styles.inactive;
 
   return (
     <TouchableOpacity
-      onPress={() =>
-        props.navigation.navigate('Invitation', { id: itemData.item.id })
-      }
+      onPress={() => dispatch(openInviteWindow(itemData.item.id))}
       style={styles.user}
     >
       <Text style={{ ...styles.text, ...activeMark }}>
