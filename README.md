@@ -1,6 +1,6 @@
 # rn-test-task-app-aj
 ## Description:
- A one-page application for finding your girlfriend / boyfriend.
+ A one-page React Native application for finding your girlfriend / boyfriend.
 The application is a list of all users of the system with filters.
 When the application starts, once a list of users by API is obtained.
 API.
