@@ -1,20 +1,53 @@
-import { SET_FILTERS, CLEAN_FILTERS } from './constants';
+import {
+  CHANGE_FILTERS,
+  FETCH_SEARCH_FILTER,
+  SET_SEARCH_FILTER,
+  CLEAN_SEARCH_FILTER,
+  SET_AGE_FILTER,
+  SET_GENDER_FILTER,
+  CLEAN_FILTERS,
+} from './constants';
 
 const initialState = {
-  params: 'empty',
+  searchFilter: '',
+  ageFilter: 'empty',
+  genderFilter: 'empty',
 };
 
 const filters = (state = initialState, action) => {
   switch (action.type) {
-    case SET_FILTERS:
+    case CHANGE_FILTERS:
+      return state;
+    case FETCH_SEARCH_FILTER:
+      return state;
+    case SET_SEARCH_FILTER:
       return {
         ...state,
-        params: action.payload,
+        ...{ searchFilter: action.payload },
+      };
+    case CLEAN_SEARCH_FILTER:
+      return {
+        ...state,
+        ...{ searchFilter: '' },
+      };
+    case SET_AGE_FILTER:
+      return {
+        ...state,
+        ...{ ageFilter: action.payload },
+      };
+    case SET_GENDER_FILTER:
+      return {
+        ...state,
+        ...{ genderFilter: action.payload },
       };
     case CLEAN_FILTERS:
       return {
         ...state,
-        params: action.payload,
+        ...{
+          searchFilter: '',
+          ageFilter: 'empty',
+          genderFilter: 'empty',
+        },
       };
     default:
       return state;

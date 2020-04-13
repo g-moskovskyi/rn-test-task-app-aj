@@ -1,12 +1,19 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet, Platform } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import { useSelector, useStore } from 'react-redux';
 
 import { fetchUsers } from '../store/users/actions';
 
-import { ABCBlock } from '../componets/ABCBlock';
-import { SearchBar } from '../componets/SearchBar';
-import { cleanFilteredUsers } from '../store/filteredUsers';
+import { UsersListBlock } from '../componets/UsersListBlock';
+import { FiltersBlock } from '../componets/FiltersBlock';
 import { cleanErrors } from '../store/errors';
 
 const RefreshButton = () => {
@@ -23,11 +30,13 @@ const RefreshButton = () => {
 };
 
 const ListScreen = (props) => {
-  const { dispatch } = useStore();
-  const usersList = useSelector((state) => state.users.items);
+  const users = useSelector((state) => state.users);
+  const noErrors = useSelector((state) => state.errors.noErrors);
   const errors = useSelector((state) => state.errors.items);
 
-  if (errors != 'empty') {
+  const usersList = users.result;
+
+  if (!noErrors) {
     return (
       <View>
         <RefreshButton />
@@ -40,7 +49,7 @@ const ListScreen = (props) => {
     );
   }
 
-  if (usersList == 'loading') {
+  if (users.loading) {
     return (
       <View>
         <RefreshButton />
@@ -49,7 +58,7 @@ const ListScreen = (props) => {
     );
   }
 
-  if (usersList == 'empty') {
+  if (!users._meta.success) {
     return (
       <View>
         <RefreshButton />
@@ -57,6 +66,7 @@ const ListScreen = (props) => {
       </View>
     );
   }
+
   if (usersList == 'no_results') {
     return (
       <View>
@@ -67,22 +77,21 @@ const ListScreen = (props) => {
   }
 
   return (
-    <View style={styles.screen}>
-      <View style={styles.buttonsBlock}>
-        <View style={styles.button}>
-          <RefreshButton />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.screen}>
+        <View style={styles.buttonsBlock}>
+          <View style={styles.button}>
+            <RefreshButton />
+          </View>
         </View>
-        <View style={styles.button}>
-          <Button
-            title='FILTERS'
-            onPress={() => props.navigation.navigate('Filter')}
-          />
+        <View style={styles.filtersBlock}>
+          <FiltersBlock />
         </View>
-        <View style={styles.button}></View>
+        <View style={styles.listBlock}>
+          <UsersListBlock />
+        </View>
       </View>
-      <SearchBar />
-      <ABCBlock navigation={props.navigation} />
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -90,14 +99,15 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     height: '100%',
-    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     borderWidth: 2,
     borderColor: 'black',
     marginHorizontal: 5,
     paddingBottom: Platform.OS === 'ios' ? 0 : 90,
     overflow: 'hidden',
   },
-  buttonsBlock: { width: '90%', marginHorizontal: 20 },
+  buttonsBlock: { height: 40, width: '90%', marginHorizontal: 20 },
   button: {
     width: '100%',
     marginVertical: 5,
@@ -106,6 +116,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     overflow: 'hidden',
   },
+  filtersBlock: { height: 170 },
+  listBlock: { height: 350 },
 });
 
 export { ListScreen };

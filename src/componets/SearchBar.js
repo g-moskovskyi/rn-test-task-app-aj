@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
-import { useStore } from 'react-redux';
+import { useStore, useSelector } from 'react-redux';
 
-import { fetchSearchFilter } from '../store/searchFilter';
+import { fetchSearchFilter } from '../store/filters';
 import { ClearButton } from './ClearButton';
 
 const SearchBar = (props) => {
-  const [text, setText] = useState('');
+  const text = useSelector((state) => state.filters.searchFilter);
   const { dispatch } = useStore();
-
-  const onChangeText = (text) => {
-    setText(text);
-    dispatch(fetchSearchFilter(text));
-  };
 
   return (
     <View style={styles.searchBar}>
@@ -21,11 +16,14 @@ const SearchBar = (props) => {
       </View>
       <TextInput
         placeholder='Search...'
-        onChangeText={(text) => onChangeText(text)}
+        onChangeText={(text) => dispatch(fetchSearchFilter(text))}
         defaultValue={text}
         style={styles.textInput}
       />
-      <ClearButton style={styles.button} onPress={() => onChangeText('')} />
+      <ClearButton
+        style={styles.button}
+        onPress={() => dispatch(fetchSearchFilter(''))}
+      />
     </View>
   );
 };
@@ -36,7 +34,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     height: 40,
-    width: '90%',
+    width: '100%',
     marginHorizontal: 20,
     paddingLeft: 10,
     borderColor: 'green',
@@ -46,7 +44,7 @@ const styles = StyleSheet.create({
   },
   text: { width: '15%' },
   textInput: { width: '75%' },
-  button: { flex: 1, width: 20 },
+  button: { width: '10%' },
 });
 
 export { SearchBar };

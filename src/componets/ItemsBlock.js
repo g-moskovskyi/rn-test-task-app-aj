@@ -8,7 +8,7 @@ const ItemsBlock = (props) => {
   const renderList = props.renderList;
 
   const renderItem = (itemData) => {
-    return <UserItem itemData={itemData} navigation={props.navigation} />;
+    return <UserItem itemData={itemData} />;
   };
 
   return (
@@ -22,6 +22,6 @@ const ItemsBlock = (props) => {
   );
 };
 
-const styles = StyleSheet.create({ itemsBlock: { flex: 1 } });
+const styles = StyleSheet.create({ itemsBlock: {} });
 
 export { ItemsBlock };

@@ -14,7 +14,7 @@ const fetchUsers = async (dispatch) => {
         'access-token': access_token,
       },
     });
-    return response.data.result;
+    return response.data;
   } catch (error) {
     dispatch(setErrors(error));
   }

@@ -35,7 +35,7 @@ const setUsersABCMiddleware = ({ dispatch, getState }) => (next) => (
 
   if (action.type == CLEAN_FILTERED_USERS) {
     state = getState();
-    const abc = usersABC(state.users.items);
+    const abc = usersABC(state.users.result);
     dispatch(setUsersABC(abc));
   }
   next(action);

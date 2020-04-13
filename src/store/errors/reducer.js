@@ -1,7 +1,7 @@
 import { SET_ERRORS, CLEAN_ERRORS } from './constants';
 
 const initialState = {
-  items: 'empty',
+  noErrors: true,
 };
 
 const errors = (state = initialState, action) => {
@@ -9,12 +9,12 @@ const errors = (state = initialState, action) => {
     case SET_ERRORS:
       return {
         ...state,
-        items: action.payload,
+        ...{ noErrors: false, items: action.payload },
       };
     case CLEAN_ERRORS:
       return {
         ...state,
-        items: action.payload,
+        ...{ noErrors: true },
       };
     default:
       return state;

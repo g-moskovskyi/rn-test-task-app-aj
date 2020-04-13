@@ -1,6 +1,6 @@
 import { FETCH_USERS } from './constants';
 import { fetchUsers } from '../../apis/fetchUsers';
-import { setUsers } from './actions';
+import { setUsers, setMeta } from './actions';
 
 const sortUsers = (users) => {
   users.sort((prev, next) => {
@@ -12,12 +12,15 @@ const sortUsers = (users) => {
   return users;
 };
 
-const setUsersMiddleware = ({ dispatch }) => (next) => (action) => {
+const setUsersMiddleware = ({ dispatch, getState }) => (next) => (action) => {
   if (action.type == FETCH_USERS) {
     fetchUsers(dispatch).then((res) => {
-      if (typeof res !== undefined) {
-        const users = res.name == 'Unauthorized' ? 'empty' : sortUsers(res);
-        dispatch(setUsers(users));
+      const state = getState();
+      if (state.errors.noErrors) {
+        if (res._meta.success) {
+          dispatch(setUsers(sortUsers(res.result)));
+        }
+        dispatch(setMeta(res._meta));
       }
     });
   }

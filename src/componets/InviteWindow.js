@@ -5,7 +5,7 @@ import { useStore, useSelector } from 'react-redux';
 import { sendInvitation } from '../store/users/actions';
 import { closeInviteWindow } from '../store/inviteWindow/actions';
 
-import { ChoiceButtton } from './ChoiceButtton';
+import { ChoiceButton } from './ChoiceButton';
 import { InformWindow } from './InformWindow';
 
 const InviteWindow = (props) => {
@@ -33,12 +33,12 @@ const InviteWindow = (props) => {
               </Text>
             </View>
             <View style={styles.buttonsBlock}>
-              <ChoiceButtton
+              <ChoiceButton
                 title='NO'
                 onPress={() => dispatch(closeInviteWindow())}
                 style={{ backgroundColor: 'red' }}
               />
-              <ChoiceButtton
+              <ChoiceButton
                 title='YES'
                 onPress={() => {
                   setInformWindowVisible(true);

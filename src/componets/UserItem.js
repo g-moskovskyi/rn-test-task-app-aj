@@ -30,7 +30,6 @@ const UserItem = (props) => {
 
 const styles = StyleSheet.create({
   user: {
-    flex: 1,
     flexDirection: 'row',
 
     borderColor: 'red',
@@ -39,8 +38,9 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginHorizontal: 15,
-    marginVertical: 10,
-    padding: 20,
+    marginVertical: 5,
+    paddingHorizontal: 20,
+    paddingVertical: 5,
     overflow: 'hidden',
   },
   text: { fontFamily: 'open-sans-bold', fontSize: 18, textAlign: 'center' },

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
 
-const ChoiceButtton = (props) => {
+const ChoiceButton = (props) => {
   return (
     <TouchableOpacity
       style={{ ...styles.button, ...props.style }}
@@ -27,4 +27,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { ChoiceButtton };
+export { ChoiceButton };

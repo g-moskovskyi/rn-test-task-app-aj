@@ -1,8 +1,16 @@
-import { FETCH_USERS, SET_USERS, SEND_INVITATION } from './constants';
+import { FETCH_USERS, SET_USERS, SET_META, SEND_INVITATION } from './constants';
+import { changeFilters } from '../filters';
 
 export const fetchUsers = () => ({
   type: FETCH_USERS,
 });
+
+export const setMeta = (meta) => (dispatch) => {
+  dispatch({
+    type: SET_META,
+    payload: meta,
+  });
+};
 
 export const setUsers = (users) => (dispatch) => {
   dispatch({
@@ -13,10 +21,12 @@ export const setUsers = (users) => (dispatch) => {
 
 export const sendInvitation = (id) => (dispatch, getState) => {
   const state = getState();
-  const filtredUsers = state.users.items.filter((item) => item.id !== id);
-  const remainingUsers = filtredUsers == [] ? 'no_results' : filtredUsers;
+  const filtredUsers = state.users.result.filter((item) => item.id !== id);
+  const remainingUsers = filtredUsers.length == 0 ? 'no_results' : filtredUsers;
+
   dispatch({
     type: SEND_INVITATION,
     payload: remainingUsers,
   });
+  dispatch(changeFilters());
 };

@@ -2,14 +2,13 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import { ItemsBlock } from '../componets/ItemsBlock';
-import { InviteWindow } from '../componets/InviteWindow';
+import { ItemsBlock } from './ItemsBlock';
+import { InviteWindow } from './InviteWindow';
 
-const ABCBlock = (props) => {
+const UsersListBlock = (props) => {
   const usersABC = useSelector((state) => state.usersABC.items);
-  const filteredUsers = useSelector((state) => state.filteredUsers.items);
-  const users = useSelector((state) => state.users.items);
-
+  const filteredUsers = useSelector((state) => state.filteredUsers.result);
+  const users = useSelector((state) => state.users.result);
   const usersList = filteredUsers == 'empty' ? users : filteredUsers;
 
   if (usersList == 'no_results') {
@@ -19,6 +18,7 @@ const ABCBlock = (props) => {
       </View>
     );
   }
+
   const renderBlock = (itemData) => {
     const renderList = usersList.filter(
       (item) => item.first_name[0].toUpperCase() === itemData.item
@@ -31,13 +31,13 @@ const ABCBlock = (props) => {
           {itemData.item}
           {'>'}
         </Text>
-        <ItemsBlock renderList={renderList} navigation={props.navigation} />
+        <ItemsBlock renderList={renderList} />
       </View>
     );
   };
 
   return (
-    <View style={styles.abcBlock}>
+    <View style={styles.abcBlock} behavior={'position'}>
       <View style={styles.inviteWindow}>
         <InviteWindow />
       </View>
@@ -52,10 +52,9 @@ const ABCBlock = (props) => {
 };
 
 const styles = StyleSheet.create({
-  abcBlock: {
-    justifyContent: 'flex-start',
-  },
-  itemBlock: { flex: 1, paddingHorizontal: 10 },
+  abcBlock: { flex: 1, height: '100%', justifyContent: 'flex-start' },
+  itemBlock: { paddingHorizontal: 10 },
   inviteWindow: { height: 0 },
 });
-export { ABCBlock };
+
+export { UsersListBlock };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, StyleSheet, Text, View } from 'react-native';
 
-import { ChoiceButtton } from './ChoiceButtton';
+import { ChoiceButton } from './ChoiceButton';
 
 const InformWindow = (props) => {
   return (
@@ -13,7 +13,7 @@ const InformWindow = (props) => {
               <Text style={styles.text}>Invitation Sent!</Text>
             </View>
             <View style={styles.buttonsBlock}>
-              <ChoiceButtton
+              <ChoiceButton
                 title='OK'
                 onPress={() => {
                   props.visibleFalse();

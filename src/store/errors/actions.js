@@ -5,5 +5,5 @@ export const setErrors = (error) => (dispatch) => {
 };
 
 export const cleanErrors = () => (dispatch) => {
-  dispatch({ type: CLEAN_ERRORS, payload: 'empty' });
+  dispatch({ type: CLEAN_ERRORS });
 };
