@@ -12,7 +12,8 @@ Filters are a set of fields that perform interactive filtering. Filtering occurs
 - age - two input fields for numbers, "from" and "to", look for in the specified range, if the start / end is not specified, we consider that there is a minimum / maximum value.
 - gender - a list with the values "Female", "Male", "Both".
 - Name - text field, searches by first_name / last_name, filtering is applied after entering more than 2 characters.
-- Button "Reset" - resets all field values.
+### Button "Reset"
+Resets all field values.
 
 ## Block -2
 ### List.
